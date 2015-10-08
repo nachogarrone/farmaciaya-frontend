@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="full">
+    <head>
+        <title>Register</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">                                   
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">FarmaciaYa</a>
+        </div>
+      
+        <div class="navbar-collapse collapse">  
+            <ul class="nav navbar-nav pull-right">
+            <li ><a href="login.html" /><i class="fa fa-user"></i> Iniciar Session</a></li>
+            <li ><a href="register.html" /><i class="fa fa-user-plus"></i> Registrarme</a></li>
+           
+          </ul>
+          
+        </div>   			      		 
+  </div>
+</div>
+
+        <div class="container">
+            <!-- <div class="row vertical-offset-100">-->
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">                                
+                        <div class="row-fluid user-row">
+                            <h1 align="center" >  Registrate </h1>
+                            <!--  
+                            <img src="http://s11.postimg.org/7kzgji28v/logo_sm_2_mr_1.png" class="img-responsive" alt="Conxole Admin"/>-->
+                        </div>
+                    </div>
+
+                    <!-- Aca iria el boton de facebook-->
+                    <!--   <div class="row">
+                           <br>
+                       <h6 align="center">O ingresar con tu email</h6>
+                      
+                       </div>-->
+
+                    <div class="panel-body">
+                        <form accept-charset="UTF-8" role="form" class="form-signin" id='form1'>
+                            <fieldset>
+                                <label class="panel-register">
+                                    <!--<div class="register_result"></div>-->
+                                </label>
+
+
+                                <input class="form-control" placeholder="Nombre" id="name" type="text">
+                                <input class="form-control" placeholder="Apellido" id="lastName" type="text">
+                                <input class="form-control" placeholder="Email" id="email" type="text">
+                                <input class="form-control" placeholder="Direccion" id="address" type="text">
+
+                                <div class="form-group" >
+                                    <select  class="form-control"  id="sel1">
+                                        <option  disabled selected  value="null"> Barrio </option>
+                                        <option> </option>
+                                        <option>Aguada</option> 
+                                        <option>Atahualpa</option>
+                                        <option>Aires Puros</option>
+                                        <option>Barrio Sur</option>
+                                        <option>Bañados de Carrasco</option>
+                                        <option>Belvedere</option>
+                                        <option>Brazo Oriental</option>
+                                        <option>Buceo</option>
+                                        <option>Carrasco</option>
+                                        <option>Carrasco Norte</option>
+                                        <option>Casavalle</option>
+                                        <option>Casabó, Pajas Blancas</option>
+                                        <option>Castro, Pérez Castellanos</option>
+                                        <option>Capurro, Bella Vista, Arroyo Seco</option>
+                                        <option>Centro</option>
+                                        <option>Cerrito de la Victoria</option>
+                                        <option>Ciudad Vieja</option>
+                                        <option>Conciliación</option>
+                                        <option>Cordón</option>
+                                        <option>Colón Sureste, Abayubá</option>
+                                        <option>Colón Centro y Noroeste</option>
+                                        <option>Flor de Maroñas</option>
+                                        <option>Ituzaingó</option>
+                                        <option>Jacinto Vera</option>
+                                        <option>Jardines del Hipódromo</option>
+                                        <option>Las Acacias</option>
+                                        <option>La Blanqueada</option>
+                                        <option>La Comercial</option>
+                                        <option>Las Canteras</option>
+                                        <option>Larrañaga</option>
+                                        <option>La Figurita</option>
+                                        <option>La Paloma, Tomkinson</option>
+                                        <option>La Teja</option>
+                                        <option>Lezica, Melilla</option>
+                                        <option>Malvín</option>
+                                        <option>Malvín Norte</option>
+                                        <option>Manga</option>
+                                        <option>Manga, Toledo Chico</option>
+                                        <option>Mercado Modelo, Bolívar</option>
+                                        <option>Maroñas, Parque Guaraní</option>
+                                        <option>Nuevo París</option>
+                                        <option>Palermo</option>
+                                        <option>Parque Batlle, Villa Dolores</option>
+                                        <option>Parque Rodó</option>
+                                        <option>Paso de la Arena, Santiago Vázquez</option>
+                                        <option>Paso de las Duranas</option>
+                                        <option>Peñarol, Lavalleja</option>
+                                        <option>Piedras Blancas</option>
+                                        <option>Prado, Nueva Savona</option>
+                                        <option>Pocitos</option>
+                                        <option>Punta Carretas</option>
+                                        <option>Punta de Rieles, Bella Italia</option>
+                                        <option>Punta Gorda</option>
+                                        <option>Reducto</option>
+                                        <option>Sayago</option>
+                                        <option>Tres Cruces</option>
+                                        <option>Tres Ombúes, Pueblo Victoria</option>
+                                        <option>Unión</option>
+                                        <option>Villa del Cerro</option>
+                                        <option>Villa Española</option>
+                                        <option>Villa García, Manga Rural</option>
+                                        <option>Villa Muñoz, Retiro, Goes</option>
+                                    </select>
+                                </div>
+                                
+                             
+
+                                <input class="form-control" placeholder="Telefono" id="phoneNumber" type="text">
+                                <input class="form-control" placeholder="Contraseña" id="password" type="password">
+                              
+                               
+
+                                <br>
+                                <input class="btn btn-lg btn-success btn-block" type="submit" id="login" value="Registrar »" >
+                                
+                                
+                            </fieldset>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  </div>-->
+
+
+
+
+    </body>
+</html>

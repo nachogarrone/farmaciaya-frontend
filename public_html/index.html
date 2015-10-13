@@ -9,11 +9,10 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/js.cookie.js"></script>
 <script type="text/javascript">
   (function() {
@@ -28,7 +27,17 @@ and open the template in the editor.
       window.location = "login.html";
    }
 })();
-</script>>
+</script>
+<script>
+  function searchMedicamentos() {
+      $.getJSON("http://localhost:8080/medicamento/search/"+$('#search').val(), function(result){
+
+          $.each(result.data, function(i, field){
+              $("#medicamentosTable tbody").append("<tr><td>"+field.nombre+"</td><td>"+field.presentacion+"</td><td>"+field.precio+"</td></tr>");
+          });
+      });
+    }
+</script>
  <link href="css/style.css" rel="stylesheet" type="text/css">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     </head>
@@ -63,8 +72,18 @@ and open the template in the editor.
                             <div class="panel-heading">      
                               
                                 <div class="row-fluid user-row">
-                                     <h1 align="center">  Filtrar </h1>
-                                 
+                                     <h1 align="center">  Buscar medicamento </h1>
+                                      <table class="table" id="medicamentosTable">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Presentacion</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
                                 </div>
                             </div>
 
@@ -75,7 +94,7 @@ and open the template in the editor.
                                         
                                         </label>
                                         <input class="form-control" placeholder="Buscar" id="search" type="text">
-                                        
+                                        <input onclick="searchMedicamentos();" class="btn btn-lg btn-success btn-block" id="searchMed" value="Buscar">
                                     </fieldset>
                                 </form>
                             </div>

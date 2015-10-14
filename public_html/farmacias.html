@@ -7,7 +7,7 @@ and open the template in the editor.
 <html class="full">
 
 <head>
-    <title>TODO supply a title</title>
+    <title>Farmacias</title>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,22 +15,33 @@ and open the template in the editor.
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/js.cookie.js"></script>
+    <script src="js/purl.js"></script>
     <script type="text/javascript">
     (function() {
         var token = Cookies.get('token');
         if (typeof token == 'undefined') {
             window.location = "login.html";
         }
-    })();
-    </script>
-    <script>
-    function searchMedicamentos() {
-        $("#medicamentosTable tbody").empty();
-        $.getJSON("http://localhost:8080/medicamento/search/" + $('#search').val() + "?auth_token=" + Cookies.get('token'), function(result) {
-            $.each(result.data, function(i, field) {
-                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id="+field.id_medicamento+"'>" +field.nombre+ "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
+
+        // get location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            //x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+
+
+        $.getJSON("http://localhost:8080/medicamento/get/" + $.url().param('id') + "?auth_token=" + Cookies.get('token'), function(result) {
+            $("#subtitleMed").html("Farmacias que disponen " + result.data.nombre + " en stock.");
+            $.each(result.data.farmacias, function(i, field) {
+                $("#farmaciasTable tbody").append("<tr><td>" + field.nombre + "</td><td>" + field.direccion + "</td><td>" + field.telefono + "</td></tr>");
             });
         });
+    })();
+
+    function showPosition(position) {
+        var x = document.getElementById("demo");
+        x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
     }
     </script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -62,24 +73,24 @@ and open the template in the editor.
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h1 align="center">  Buscar medicamento </h1>
+                    <p id="demo"></p>
+                    <h1 align="center">  Farmacias cercanas </h1>
+                    <p align="center" id="subtitleMed"> Farmacias que disponen en stock </p>
                     <form accept-charset="UTF-8" role="form" class="form-signin">
                         <fieldset>
                             <label class="panel-home">
                             </label>
-                            <input onchange="searchMedicamentos();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" class="form-control" placeholder="Buscar" id="search" type="text">
-                            <!-- <input onchange="searchMedicamentos();" class="btn btn-lg btn-success btn-block" value="Buscar"> -->
                         </fieldset>
                     </form>
                 </div>
                 <div class="panel-heading">
                     <div class="row-fluid user-row">
-                        <table class="table" id="medicamentosTable">
+                        <table class="table" id="farmaciasTable">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Presentacion</th>
-                                    <th>Precio</th>
+                                    <th>Direccion</th>
+                                    <th>Telefono</th>
                                 </tr>
                             </thead>
                             <tbody>

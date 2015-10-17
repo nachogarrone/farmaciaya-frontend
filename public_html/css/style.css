@@ -7,14 +7,10 @@ body {
   font-size: 14px;
   height: 100%; 
   
-margin-top: 30px;
-	margin-bottom: 50px;
+
 	background: none;
 }
 
-body {
-	
-}
 
 .full {
      background: url( '../img/Background.jpg' )  no-repeat center center fixed; 
@@ -54,6 +50,8 @@ body {
     margin: auto;
     }
     .panel {
+        margin-top: 80px;
+
     margin-bottom: 20px;
     background-color: rgba(255, 255, 255, 0.75);
     border: 1px solid transparent;
@@ -66,3 +64,28 @@ body {
         overflow-x: auto;
 overflow-y: auto;
     }
+    
+
+#map{
+    width:25%;
+    height:calc(100% - 0);
+
+    position:absolute;
+    right:16px;
+    top:50px;
+    bottom:0;
+    overflow:hidden;
+}
+
+#main, #main>.row {
+	height:100%;
+}
+
+#main>.row {
+    overflow-y:scroll;
+}
+
+#left {
+	height:100%;
+        margin-left:4%;
+}

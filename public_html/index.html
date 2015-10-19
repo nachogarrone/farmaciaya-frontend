@@ -28,7 +28,7 @@ and open the template in the editor.
         $("#medicamentosTable tbody").empty();
         $.getJSON("http://localhost:8080/medicamento/search/" + $('#search').val() + "?auth_token=" + Cookies.get('token'), function(result) {
             $.each(result.data, function(i, field) {
-                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id="+field.id_medicamento+"'>" +field.nombre+ "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
+                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id=" + field.id_medicamento + "'>" + field.nombre + "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
             });
         });
     }
@@ -50,9 +50,7 @@ and open the template in the editor.
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="login.html" /><i class="fa fa-user"></i> Iniciar Session</a>
-                    </li>
-                    <li><a href="register.html" /><i class="fa fa-user-plus"></i> Registrarme</a>
+                    <li><a id="username" href="#" /><i class="fa fa-user"></i></a>
                     </li>
                 </ul>
             </div>
@@ -90,6 +88,12 @@ and open the template in the editor.
             </div>
         </div>
     </div>
+    <script>
+    (function() {
+        var username = document.getElementById("username");
+        username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last');
+    })();
+    </script>
 </body>
 
 </html>

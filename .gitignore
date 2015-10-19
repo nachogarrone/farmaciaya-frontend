@@ -2,6 +2,7 @@ reated by https://www.gitignore.io/api/netbeans,intellij
 
 ### NetBeans ###
 nbproject/private/
+nbproject/
 build/
 nbbuild/
 dist/
@@ -9,7 +10,7 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
-
+src/
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio

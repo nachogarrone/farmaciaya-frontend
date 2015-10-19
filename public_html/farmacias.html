@@ -131,7 +131,7 @@ and open the template in the editor.
                     var posD = new google.maps.LatLng(farmacias[i].latitude, farmacias[i].longitude);
                     //Calculo la distancia entre mi posicion y la farmacia y la guardo en el array para luego ordenar
                     //los medicamentos
-                    var farm1 = google.maps.geometry.spherical.computeLength(new google.maps.LatLng(posO, posD));
+                    var farm1 = new google.maps.geometry.spherical.computeLength(new google.maps.LatLng(posO, posD));
                     console.log(farm1);
                     // alert(  addressPharmacys[i][5]);
 

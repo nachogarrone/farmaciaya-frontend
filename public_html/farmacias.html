@@ -175,7 +175,8 @@ and open the template in the editor.
 
     //Funcion que pasa de direccion textual a coordenadas, estas coordenadas
     // me las guardo en el array para calcular distancias para ordenar farmacias con medicamentos por distancia.
-    function geocodePharmacyAddress(geocoder, resultsMap) {
+  /**  function geocodePharmacyAddress(geocoder, resultsMap) {
+  
         var image = {
             url: 'img/pharmacy.ico',
             size: new google.maps.Size(30, 32),
@@ -201,7 +202,7 @@ and open the template in the editor.
                         icon: image,
                         title: titlePharmacy,
                         shape: shape,
-                        position: results[0].geometry.location,
+                        position: results[0].geometry.location
                     });
                     //farmacias[i].latitude = marker.lat;
                     //farmacias[i].longitude = marker.lng;
@@ -215,7 +216,7 @@ and open the template in the editor.
         }
 
 
-    }
+    }**/
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
@@ -226,7 +227,7 @@ and open the template in the editor.
     </script>
     <script type="text/javascript" src="
 https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
-    </script>
+   
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script>

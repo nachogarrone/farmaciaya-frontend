@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script>
     function sendData() {
-        windws.alert("entro");
+      
         $.ajax({
             url: 'http://localhost:8080/user/login?username=' + $('#username').val() + '&password=' + $('#password').val(),
             type: 'POST',

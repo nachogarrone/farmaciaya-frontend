@@ -28,7 +28,7 @@ and open the template in the editor.
         $.getJSON("http://localhost:8080/medicamento/get/" + $.url().param('id') + "?auth_token=" + Cookies.get('token'), function(result) {
             $("#subtitleMed").html("Farmacias que disponen " + result.data.nombre + " en stock.");
             $.each(result.data.farmacias, function(i, field) {
-                $("#farmaciasTable tbody").append("<tr><td>" + field.nombre + "</td><td>" + field.direccion + "</td><td>" + field.telefono + "</td></tr>");
+                // $("#farmaciasTable tbody").append("<tr><td>" + field.nombre + "</td><td>" + field.direccion + "</td><td>" + field.telefono + "</td></tr>");
                 farmacias.push(field);
             });
         });
@@ -81,6 +81,7 @@ and open the template in the editor.
                                         <th>Nombre</th>
                                         <th>Direccion</th>
                                         <th>Telefono</th>
+                                        <th>Distancia</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,6 +107,7 @@ and open the template in the editor.
         });
         var geocoder = new google.maps.Geocoder();
         geocodePharmacyAddress(geocoder, map);
+        var farmaciasDistancias = new Array();
         // var infoWindow = new google.maps.InfoWindow({map: map});
 
         if (navigator.geolocation) {
@@ -128,14 +130,26 @@ and open the template in the editor.
 
                 for (i = 0; i < farmacias.length; i++) {
                     var posO = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    var posD = new google.maps.LatLng(farmacias[i].latitude, farmacias[i].longitude);
+                    var posD = new google.maps.LatLng(farmacias[i].latitud, farmacias[i].longitud);
                     //Calculo la distancia entre mi posicion y la farmacia y la guardo en el array para luego ordenar
                     //los medicamentos
-                    var farm1 = new google.maps.geometry.spherical.computeLength(new google.maps.LatLng(posO, posD));
-                    console.log(farm1);
+                    var distanciaFarmacia = google.maps.geometry.spherical.computeDistanceBetween(posO, posD);
+                    distanciaFarmacia = distanciaFarmacia / 1000;
+                    distanciaFarmacia = Math.round( distanciaFarmacia * 10) / 10;
+                    farmaciasDistancias.push({
+                        farmacia: farmacias[i],
+                        distancia: distanciaFarmacia
+                    });
                     // alert(  addressPharmacys[i][5]);
+                }
 
+                // ORDENAR ARRAY DE DISTANCIAS
+                farmaciasDistancias = farmaciasDistancias.sort(function(a,b) {return (a.distancia > b.distancia) ? 1 : ((b.distancia > a.distancia) ? -1 : 0);});
 
+                // MOSTRAR DATOS
+                for (var i = 0; i < farmaciasDistancias.length; i++) {
+                    var field = farmaciasDistancias[i];
+                    $("#farmaciasTable tbody").append("<tr><td>" + field.farmacia.nombre + "</td><td>" + field.farmacia.direccion + "</td><td>" + field.farmacia.telefono + "</td><td>" + field.distancia + "Km</td></tr>");
                 }
                 //Circulo rojo de radio.
                 /**  var cityCircle = new google.maps.Circle({
@@ -187,8 +201,8 @@ and open the template in the editor.
                         shape: shape,
                         position: results[0].geometry.location,
                     });
-                    farmacias[i].latitude = marker.lat;
-                    farmacias[i].longitude = marker.lng;
+                    //farmacias[i].latitude = marker.lat;
+                    //farmacias[i].longitude = marker.lng;
 
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
@@ -208,12 +222,14 @@ and open the template in the editor.
             'Error: Your browser doesn\'t support geolocation.');
     }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBrQStpGDwRAB8L7oz6x_N009365gA50Q&signed_in=true&callback=initMap" async defer>
+    <script type="text/javascript" src="
+https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
     </script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script>
     (function() {
+        initMap();
         var username = document.getElementById("username");
         username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last');
     })();

@@ -53,7 +53,11 @@ and open the template in the editor.
                 <ul class="nav navbar-nav pull-right">
                     <li><a id="username" href="#" /><i class="fa fa-user"></i></a>
                     </li>
-                     <li><a href="login.html" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                    <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
+                    </li>
+                    <li><a href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    </li>
+                    <li><a href="login.html" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +68,7 @@ and open the template in the editor.
             <!--  <div class="container">-->
             <div class="col-xs-8" id="left">
                 <div class="panel panel-default">
-                    <div class="panel-body">
+                    <div class="panel-heading">
                         <p id="demo"></p>
                         <h1 align="center">  Farmacias cercanas </h1>
                         <p align="center" id="subtitleMed"> Farmacias que disponen en stock </p>
@@ -75,7 +79,7 @@ and open the template in the editor.
                             </fieldset>
                         </form>
                     </div>
-                    <div class="panel-heading">
+                    <div class="panel-body">
                         <div class="row-fluid user-row">
                             <table class="table" id="farmaciasTable">
                                 <thead>
@@ -108,7 +112,6 @@ and open the template in the editor.
             zoom: 13
         });
         var geocoder = new google.maps.Geocoder();
-        //geocodePharmacyAddress(geocoder, map);
         var farmaciasDistancias = new Array();
         // var infoWindow = new google.maps.InfoWindow({map: map});
 
@@ -137,7 +140,7 @@ and open the template in the editor.
                     //los medicamentos
                     var distanciaFarmacia = google.maps.geometry.spherical.computeDistanceBetween(posO, posD);
                     distanciaFarmacia = distanciaFarmacia / 1000;
-                    distanciaFarmacia = Math.round( distanciaFarmacia * 10) / 10;
+                    distanciaFarmacia = Math.round(distanciaFarmacia * 10) / 10;
                     farmaciasDistancias.push({
                         farmacia: farmacias[i],
                         distancia: distanciaFarmacia
@@ -146,7 +149,9 @@ and open the template in the editor.
                 }
 
                 // ORDENAR ARRAY DE DISTANCIAS
-                farmaciasDistancias = farmaciasDistancias.sort(function(a,b) {return (a.distancia > b.distancia) ? 1 : ((b.distancia > a.distancia) ? -1 : 0);});
+                farmaciasDistancias = farmaciasDistancias.sort(function(a, b) {
+                    return (a.distancia > b.distancia) ? 1 : ((b.distancia > a.distancia) ? -1 : 0);
+                });
 
                 // MOSTRAR DATOS
                 for (var i = 0; i < farmaciasDistancias.length; i++) {
@@ -175,48 +180,48 @@ and open the template in the editor.
 
     //Funcion que pasa de direccion textual a coordenadas, estas coordenadas
     // me las guardo en el array para calcular distancias para ordenar farmacias con medicamentos por distancia.
-  /**  function geocodePharmacyAddress(geocoder, resultsMap) {
+    /**  function geocodePharmacyAddress(geocoder, resultsMap) {
   
-        var image = {
-            url: 'img/pharmacy.ico',
-            size: new google.maps.Size(30, 32),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(0, 32)
-        };
-        var shape = {
-            coords: [1, 1, 1, 20, 18, 20, 18, 1],
-            type: 'poly'
-        };
-        var address;
-        var titlePharmacy;
-        for (i = 0; i < farmacias.length; i++) {
-            address = farmacias[i].direccion + ",Montevideo,Uruguay";
-            titlePharmacy = farmacias[i].nombre + " Telefono: " + farmacias[i].telefono;
-            geocoder.geocode({
-                'address': address
-            }, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    //  resultsMap.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        icon: image,
-                        title: titlePharmacy,
-                        shape: shape,
-                        position: results[0].geometry.location
-                    });
-                    //farmacias[i].latitude = marker.lat;
-                    //farmacias[i].longitude = marker.lng;
+          var image = {
+              url: 'img/pharmacy.ico',
+              size: new google.maps.Size(30, 32),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(0, 32)
+          };
+          var shape = {
+              coords: [1, 1, 1, 20, 18, 20, 18, 1],
+              type: 'poly'
+          };
+          var address;
+          var titlePharmacy;
+          for (i = 0; i < farmacias.length; i++) {
+              address = farmacias[i].direccion + ",Montevideo,Uruguay";
+              titlePharmacy = farmacias[i].nombre + " Telefono: " + farmacias[i].telefono;
+              geocoder.geocode({
+                  'address': address
+              }, function(results, status) {
+                  if (status === google.maps.GeocoderStatus.OK) {
+                      //  resultsMap.setCenter(results[0].geometry.location);
+                      var marker = new google.maps.Marker({
+                          map: resultsMap,
+                          icon: image,
+                          title: titlePharmacy,
+                          shape: shape,
+                          position: results[0].geometry.location
+                      });
+                      //farmacias[i].latitude = marker.lat;
+                      //farmacias[i].longitude = marker.lng;
 
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-
-
-        }
+                  } else {
+                      alert('Geocode was not successful for the following reason: ' + status);
+                  }
+              });
 
 
-    }**/
+          }
+
+
+      }**/
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
@@ -227,7 +232,6 @@ and open the template in the editor.
     </script>
     <script type="text/javascript" src="
 https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
-   
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script>

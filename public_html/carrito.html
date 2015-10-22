@@ -16,24 +16,8 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/js.cookie.js"></script>
     <script src="js/purl.js"></script>
-    <script type="text/javascript">
-    var farmacias = new Array();
-    (function() {
-        var token = Cookies.get('token');
-        if (typeof token == 'undefined') {
-            window.location = "login.html";
-        }
-
-
-        // $.getJSON("http://localhost:8080/medicamento/get/" + $.url().param('id') + "?auth_token=" + Cookies.get('token'), function(result) {
-        //     $("#subtitleMed").html("Farmacias que disponen " + result.data.nombre + " en stock.");
-        //     $.each(result.data.farmacias, function(i, field) {
-        //         $("#farmaciasTable tbody").append("<tr><td>" + field.nombre + "</td><td>" + field.direccion + "</td><td>" + field.telefono + "</td></tr>");
-        //         farmacias.push(field);
-        //     });
-        // });
-    })();
-    </script> 
+    <script src="js/utilities.js"></script>
+    <script src="js/security.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
@@ -57,7 +41,7 @@ and open the template in the editor.
                         </li>
                          <li><a href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
                     </li>
-                    <li><a href="login.html" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                    <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                     </li>
                    
                 </ul>

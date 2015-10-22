@@ -15,14 +15,8 @@ and open the template in the editor.
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/js.cookie.js"></script>
-    <script type="text/javascript">
-    (function() {
-        var token = Cookies.get('token');
-        if (typeof token == 'undefined') {
-            window.location = "login.html";
-        }
-    })();
-    </script>
+    <script src="js/utilities.js"></script>
+    <script src="js/security.js"></script>
     <script>
     function searchMedicamentos() {
         $("#medicamentosTable tbody").empty();
@@ -31,6 +25,14 @@ and open the template in the editor.
                 $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id=" + field.id_medicamento + "'>" + field.nombre + "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
             });
         });
+    }
+    </script>
+    <script type="text/javascript">
+    function cerrarSesion() {
+        Cookies.remove('token');
+        Cookies.remove('name');
+        Cookies.remove('last');
+        $(location).attr('href', 'login.html');
     }
     </script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -56,7 +58,7 @@ and open the template in the editor.
                     </li>
                     <li><a href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
                     </li>
-                    <li><a href="login.html" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                    <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                     </li>
                 </ul>
             </div>

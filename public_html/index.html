@@ -22,7 +22,7 @@ and open the template in the editor.
         $("#medicamentosTable tbody").empty();
         $.getJSON("http://localhost:8080/medicamento/search/" + $('#search').val() + "?auth_token=" + Cookies.get('token'), function(result) {
             $.each(result.data, function(i, field) {
-                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id=" + field.id_medicamento + "'>" + field.nombre + "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
+                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id=" + field.medicamento_id + "'>" + field.nombre + "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
             });
         });
     }

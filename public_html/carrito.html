@@ -36,14 +36,14 @@ and open the template in the editor.
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
                     <li><a id="username" href="#" /><i class="fa fa-user"></i></a>
-                        </li>
-                          <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
-                        </li>
-                         <li><a href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    </li>
+                    <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
+                    </li>
+                    <li><a href="carrito.html" id="carritoname" /> <i class="fa fa-cart-plus"></i>
+                        <div id="carritoname"></div> Carrito</a>
                     </li>
                     <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                     </li>
-                   
                 </ul>
             </div>
         </div>
@@ -65,7 +65,7 @@ and open the template in the editor.
                     </div>
                     <div class="panel-body">
                         <div class="row-fluid user-row">
-                            <table class="table" id="farmaciasTable">
+                            <table class="table" id="carritoTable">
                                 <thead>
                                     <tr>
                                         <th>Farmacia</th>
@@ -76,14 +76,11 @@ and open the template in the editor.
                                 </thead>
                                 <tbody>
                                 </tbody>
-                              
                             </table>
-                            <a  class="btn btn-default  " href="farmacias.html">Seguir comprando</a>
-
-                                <a  class="btn btn-default btn pull-right " href="compro.html">Comprar</a>
+                            <a class="btn btn-default" href="index.html">Seguir comprando</a>
+                            <a class="btn btn-default" href="javascript:void(0)" onclick="vaciarCarrito();">Vaciar carrito</a>
+                            <a class="btn btn-default btn pull-right " href="compro.html">Comprar</a>
                         </div>
-                        
-                        
                     </div>
                 </div>
             </div>
@@ -92,14 +89,38 @@ and open the template in the editor.
     <div class="google-maps">
         <div id="map"></div>
     </div>
-   
-           
+    <script type="text/javascript">
+    carrito = Cookies.getJSON('carrito');
+    if (typeof carrito != 'undefined') {
+        for (var i = 0; i < carrito.length; i++) {
+            var field = carrito[i];
+            $("#carritoTable tbody").append("<tr><td>" + field.farmacia + "</td><td>" + field.medicamento + "</td><td>" + field.precio + "</td><td>1</td></tr>");
+        }
+    }
+    </script>
+    <script type="text/javascript">
+    (function() {
+        carrito = Cookies.getJSON('carrito');
+        if (typeof carrito != 'undefined') {
+            var carritoname = document.getElementById('carritoname');
+            carritoname.innerHTML = carrito.length;
+        }
+    })();
+    </script>
+    <script type="text/javascript">
+    function vaciarCarrito() {
+        Cookies.remove('carrito');
+        $("#carritoTable tbody").empty();
+
+        var carritoname = document.getElementById('carritoname');
+        carritoname.innerHTML = 0;
+    }
+    </script>
     <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBrQStpGDwRAB8L7oz6x_N009365gA50Q&signed_in=true&callback=initMap" async defer>
     </script>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-   
 </body>
 
 </html>

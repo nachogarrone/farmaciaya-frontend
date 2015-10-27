@@ -4,3 +4,4 @@ function cerrarSesion() {
     Cookies.remove('last');
     $(location).attr('href', 'login.html');
 }
+var carrito;

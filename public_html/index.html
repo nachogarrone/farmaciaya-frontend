@@ -56,7 +56,7 @@ and open the template in the editor.
                     </li>
                     <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
                     </li>
-                    <li><a href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    <li><a id="carritoname" href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
                     </li>
                     <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                     </li>
@@ -100,6 +100,12 @@ and open the template in the editor.
     (function() {
         var username = document.getElementById("username");
         username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last');
+
+        carrito = Cookies.getJSON('carrito');
+        if (typeof carrito != 'undefined') {
+            var carritoname = document.getElementById('carritoname');
+            carritoname.innerHTML = carritoname.innerHTML + " " + carrito.length;
+        }
     })();
     </script>
 </body>

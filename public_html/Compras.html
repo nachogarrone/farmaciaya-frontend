@@ -17,10 +17,10 @@ and open the template in the editor.
     <script src="js/js.cookie.js"></script>
     <script src="js/purl.js"></script>
     <script src="js/utilities.js"></script>
-    <script src="js/security.js"></script> 
+    <script src="js/security.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
@@ -41,7 +41,8 @@ and open the template in the editor.
                     </li>
                     <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
                     </li>
-                    <li><a href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    <li><a href="carrito.html" id="carritoname" /> <i class="fa fa-cart-plus"></i>
+                        <div id="carritoname"></div> Carrito</a>
                     </li>
                     <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                     </li>
@@ -52,27 +53,64 @@ and open the template in the editor.
     <div class="container-fluid" id="main">
         <div class="row">
             <!--  <div class="container">-->
-            <div class="col-xs-4" id="centerCheckout">
+            <div class="col-xs-6" id="leftShop">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h1 align="center">  Compra exitosa!! </h1>
-                        <p align="center" id="subtitleMed">Verifique su cuenta de correo electronico. </p>
-                        <h2 align="center"> Calificar </h2>
-                        <div class="ec-stars-wrapper" align="center">
-							<a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-							<a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-							<a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-							<a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-							<a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-						</div>
+                        <h1 align="center">  Carrito </h1>
+                        <p align="center" id="subtitleMed"> Calificacion de compras. </p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row-fluid user-row">
+                            <table class="table" id="carritoTable">
+                                <thead>
+                                    <tr>
+                                        <th>Farmacia</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Calificacion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <a class="btn btn-default" href="index.html">Calificar</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
- 
-  
+    
+    <script type="text/javascript">
+    carrito = Cookies.getJSON('carrito');
+    if (typeof carrito != 'undefined') {
+        for (var i = 0; i < carrito.length; i++) {
+            var field = carrito[i];
+            $("#carritoTable tbody").append("<tr><td>" + field.farmacia + "</td><td>" + field.fecha + "</td><td>" + field.monto + "</td><td>"+ field.Calificacion + "</td></tr>");
+        }
+    }
+    </script>
+    <script type="text/javascript">
+    (function() {
+        carrito = Cookies.getJSON('carrito');
+        if (typeof carrito != 'undefined') {
+            var carritoname = document.getElementById('carritoname');
+            carritoname.innerHTML = carrito.length;
+        }
+    })();
+    </script>
+    <script type="text/javascript">
+    function vaciarCarrito() {
+        Cookies.remove('carrito');
+        $("#carritoTable tbody").empty();
 
+        var carritoname = document.getElementById('carritoname');
+        carritoname.innerHTML = 0;
+    }
+    </script>
+  
+    
+ 
 </body>
 
 </html>

@@ -3,6 +3,7 @@
 
 <head>
     <title>Register</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -12,9 +13,11 @@
      <script>
     function sendData() {
         var formData = JSON.stringify($("#form1").serializeArray());
+        console.log(formData);
+        alert(formData);
         $.ajax({
  				 type: "POST",
- 				 url: "serverUrl",
+ 				 url: "http://localhost:8080/user/register",
  				 data: formData,
  				 success: function(){},
  				 dataType: "json",
@@ -141,9 +144,9 @@
                                 </select>
                             </div>
                             <input class="form-control" placeholder="Telefono" id="phoneNumber" type="text">
-                            <input class="form-control" placeholder="Contraseña" id="password" type="password">
+                            <input class="form-control" placeholder="Password" id="password" type="password">
                             <br>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" id="login" value="Registrar »" onclick="myFunction()">
+                            <input class="btn btn-lg btn-success btn-block" id="login" value="Registrar" onclick="sendData()">
                         </fieldset>
                     </form>
                 </div>

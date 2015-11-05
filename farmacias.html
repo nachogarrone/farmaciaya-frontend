@@ -24,7 +24,7 @@ and open the template in the editor.
     var precio;
     var medicamentoId;
     (function() {
-        $.getJSON("http://localhost:8080/medicamento/get/" + $.url().param('id') + "?auth_token=" + Cookies.get('token'), function(result) {
+        $.getJSON("http://localhost:8080/farmaya/medicamento/get/" + $.url().param('id') + "?auth_token=" + Cookies.get('token'), function(result) {
             medicamentoId = $.url().param('id');
             medicamento = result.data.nombre;
             precio = result.data.precio;

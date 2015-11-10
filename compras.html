@@ -20,12 +20,12 @@ and open the template in the editor.
     <script src="js/security.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-         <div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,14 +40,14 @@ and open the template in the editor.
                     <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
                     </li>
                     <li class="dropdown">
-                      
-                      <a  id="username"  href="#" class="dropdown-toggle"data-toggle="dropdown"> <i class="fa fa-user"></i></span></a>
-                         <ul class="dropdown-menu">
-                             <li><a href="compras.html"/> <i class="fa fa-list"></i> Compras</a>
-                             </li>
-                             <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
-                              </li>
-                         </ul>
+                        <a id="username" href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="compras.html" /> <i class="fa fa-list"></i> Compras</a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                            </li>
+                        </ul>
                     </li>
                     <li><a id="carritoname" href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
                     </li>
@@ -86,47 +86,32 @@ and open the template in the editor.
             </div>
         </div>
     </div>
-    
-    <script type="text/javascript">
-    carrito = Cookies.getJSON('carrito');
-    if (typeof carrito != 'undefined') {
-        for (var i = 0; i < carrito.length; i++) {
-            var field = carrito[i];
-            $("#carritoTable tbody").append("<tr><td>" + field.farmacia + "</td><td>" + field.fecha + "</td><td>" + field.monto + "</td><td>"+ field.Calificacion + "</td></tr>");
-        }
-    }
-    </script>
-       <script type="text/javascript">
-    function vaciarCarrito() {
-        Cookies.remove('carrito');
-        $("#carritoTable tbody").empty();
-
-        var carritoname = document.getElementById('carritoname');
-        carritoname.innerHTML = '<i class="fa fa-cart-plus"></i> Carrito';
-    }
-    </script>
-
     <script>
     (function() {
         var username = document.getElementById("username");
-        username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last') +' <span class="caret">';
+        username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last') + ' <span class="caret">';
 
         carrito = Cookies.getJSON('carrito');
         if (typeof carrito != 'undefined') {
             var carritoname = document.getElementById('carritoname');
-            if(carrito.length==0){
-              carritoname.innerHTML += " 0";
-            }else{
-                
-            carritoname.innerHTML = carritoname.innerHTML + " "+carrito.length; //carritoname.innerHTML + " " + 
+            if (carrito.length == 0) {
+                carritoname.innerHTML += " 0";
+            } else {
+
+                carritoname.innerHTML = carritoname.innerHTML + " " + carrito.length; //carritoname.innerHTML + " " + 
+            }
         }
-        }
-  
-       
+
+        $("#carritoTable tbody").empty();
+        $.getJSON("http://localhost:8080/farmaya/compra/get/" + "?auth_token=" + Cookies.get('token'), function(result) {
+            $.each(result.data, function(i, field) {
+                $("#carritoTable tbody").append("<tr><td>" + field.farmacia.nombre + "</a></td><td>" + field.date + "</td><td>$U " + field.total + "</td><td>" + field.medicacion + "</td></tr>");
+            });
+        });
+
+
     })();
     </script>
-    
- 
 </body>
 
 </html>

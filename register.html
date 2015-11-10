@@ -3,11 +3,56 @@
 
 <head>
     <title>Register</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+     <script>
+     $(function() {
+         $( "#datepicker" ).datepicker();
+  });
+
+//new Date(newDate).getTime() 
+    function sendData() {
+
+        name = form1.elements["name"].value;
+        lastName = form1.elements["lastName"].value;
+        email = form1.elements["email"].value;
+        address = form1.elements["address"].value;
+        neighborhood = form1.elements["sel1"].value;
+        birthdate = form1.elements["datepicker"].value;
+        password = form1.elements["password"].value;
+        fecha= new Date(birthdate).getTime();
+
+       
+        
+      var data= '{"username":"'+email+'","password":"'+password+'","firstname":"'+name+'","lastname":"'+lastName+'","email":"'+email+'","address":"'+address+'","neighborhood":"'+neighborhood+'","birthdate":'+fecha+'}';  //objecto Json con datoscargados
+
+      //alert(JSON.stringify(data));
+        $.ajax({
+                 type: 'POST',
+                 url: 'http://localhost:8080/farmaya/user/register',
+                 data: data,
+                 success: function(result){
+                    if(result.status=='ERROR'){
+                        alert(result.message);
+                    }else{
+                    $(location).attr('href', 'login.html');
+                }
+                 },
+                 dataType: 'Json',
+                 contentType : 'application/json'
+        });
+
+}
+    </script>
 </head>
 
 <body>
@@ -126,10 +171,11 @@
                                     <option>Villa Muñoz, Retiro, Goes</option>
                                 </select>
                             </div>
-                            <input class="form-control" placeholder="Telefono" id="phoneNumber" type="text">
-                            <input class="form-control" placeholder="Contraseña" id="password" type="password">
+                            
+                            <input class="form-control" placeholder="Fecha de nacimiento" id="datepicker" type="text">
+                            <input class="form-control" placeholder="Password" id="password" type="password">
                             <br>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" id="login" value="Registrar »">
+                            <input class="btn btn-lg btn-success btn-block" id="login" value="Registrar" onclick="sendData()">
                         </fieldset>
                     </form>
                 </div>

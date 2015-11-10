@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html class="full">
+
+<head>
+    <title>FarmaciaYa</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie.js"></script>
+    <script src="js/purl.js"></script>
+    <script src="js/utilities.js"></script>
+    <script src="js/security.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    function sendData() {
+        var carrito = Cookies.getJSON('carrito');
+        var id = Cookies.get('comprareciente');
+        $.ajax({
+
+            type: 'POST',
+            url: 'http://localhost:8080/compra/valuate/' + id + '/' + '1',
+            success: function() {
+                $(location).attr('href', 'index.html');
+            },
+            dataType: 'Json',
+            contentType: 'application/json'
+        });
+    }
+
+    function sendData2() {
+        var carrito = Cookies.getJSON('carrito');
+        var id = Cookies.get('comprareciente');
+        $.ajax({
+
+            type: 'POST',
+            url: 'http://localhost:8080/compra/valuate/' + id + '/' + '2',
+            success: function() {
+                $(location).attr('href', 'index.html');
+            },
+            dataType: 'Json',
+            contentType: 'application/json'
+        });
+    }
+
+    function sendData3() {
+        var carrito = Cookies.getJSON('carrito');
+        var id = Cookies.get('comprareciente');
+        $.ajax({
+
+            type: 'POST',
+            url: 'http://localhost:8080/compra/valuate/' + id + '/' + '3',
+            success: function() {
+                $(location).attr('href', 'index.html');
+            },
+            dataType: 'Json',
+            contentType: 'application/json'
+        });
+    }
+
+    function sendData4() {
+        var carrito = Cookies.getJSON('carrito');
+        var id = Cookies.get('comprareciente');
+        $.ajax({
+
+            type: 'POST',
+            url: 'http://localhost:8080/compra/valuate/' + id + '/' + '4',
+            success: function() {
+                $(location).attr('href', 'index.html');
+            },
+            dataType: 'Json',
+            contentType: 'application/json'
+        });
+    }
+
+    function sendData5() {
+        var carrito = Cookies.getJSON('carrito');
+        var id = Cookies.get('comprareciente');
+        $.ajax({
+
+            type: 'POST',
+            url: 'http://localhost:8080/compra/valuate/' + id + '/' + '5',
+            success: function() {
+                $(location).attr('href', 'index.html');
+            },
+            dataType: 'Json',
+            contentType: 'application/json'
+        });
+    }
+    </script>
+</head>
+
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">FarmaciaYa</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
+                    </li>
+                    <li class="dropdown">
+                        <a id="username" href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="compras.html" /> <i class="fa fa-list"></i> Compras</a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a id="carritoname" href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    </li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="main">
+        <div class="row">
+            <!--  <div class="container">-->
+            <div class="col-xs-4" id="centerCheckout">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 align="center">  Compra exitosa!! </h1>
+                        <p align="center" id="subtitleMed">Verifique su cuenta de correo electronico. </p>
+                        <h2 align="center"> Calificar </h2>
+                        <div class="ec-stars-wrapper" align="center" id="stars">
+                            <a id="1star" href="#" data-value="1" title="Votar con 1 estrellas" onclick="sendData()">&#9733;</a>
+                            <a id="2star" href="#" data-value="2" title="Votar con 2 estrellas" onclick="sendData2()">&#9733;</a>
+                            <a id="3star" href="#" data-value="3" title="Votar con 3 estrellas" onclick="sendData3()">&#9733;</a>
+                            <a id="4star" href="#" data-value="4" title="Votar con 4 estrellas" onclick="sendData4()">&#9733;</a>
+                            <a id="5star" href="#" data-value="5" title="Votar con 5 estrellas" onclick="sendData5()">&#9733;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function() {
+        var username = document.getElementById("username");
+        username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last') + ' <span class="caret">';
+
+        carrito = Cookies.getJSON('carrito');
+        if (typeof carrito != 'undefined') {
+            var carritoname = document.getElementById('carritoname');
+            if (carrito.length == 0) {
+                carritoname.innerHTML += " 0";
+            } else {
+
+                carritoname.innerHTML = carritoname.innerHTML + " " + carrito.length; //carritoname.innerHTML + " " + 
+            }
+        }
+
+
+    })();
+    </script>
+</body>
+
+</html>

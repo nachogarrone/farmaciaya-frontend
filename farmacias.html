@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html class="full">
+
+<head>
+    <title>FarmaciaYa</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie.js"></script>
+    <script src="js/purl.js"></script>
+    <script src="js/utilities.js"></script>
+    <script src="js/security.js"></script>
+    <script type="text/javascript">
+    var farmacias = new Array();
+    var medicamento;
+    var precio;
+    var medicamentoId;
+    (function() {
+        $.getJSON("http://localhost:8080/farmaya/medicamento/get/" + $.url().param('id') + "?auth_token=" + Cookies.get('token'), function(result) {
+            medicamentoId = $.url().param('id');
+            medicamento = result.data.nombre;
+            precio = result.data.precio;
+            $("#subtitleMed").html("Farmacias que disponen " + medicamento + " en stock.");
+            $.each(result.data.farmacias, function(i, field) {
+                // $("#farmaciasTable tbody").append("<tr><td>" + field.nombre + "</td><td>" + field.direccion + "</td><td>" + field.telefono + "</td></tr>");
+                farmacias.push(field);
+            });
+        });
+    })();
+    </script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">FarmaciaYa</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
+                    </li>
+                    <li class="dropdown">
+                      
+                      <a  id="username"  href="#" class="dropdown-toggle"data-toggle="dropdown"> <i class="fa fa-user"></i></span></a>
+                         <ul class="dropdown-menu">
+                             <li><a href="compras.html"/> <i class="fa fa-list"></i> Compras</a>
+                             </li>
+                             <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                              </li>
+                         </ul>
+                    </li>
+                    <li><a id="carritoname" href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    </li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="main">
+        <div class="row">
+            <!--  <div class="container">-->
+            <div class="col-xs-8" id="left">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p id="demo"></p>
+                        <h1 align="center">  Farmacias cercanas </h1>
+                        <p align="center" id="subtitleMed"> Farmacias que disponen en stock </p>
+                        <form accept-charset="UTF-8" role="form" class="form-signin">
+                            <fieldset>
+                                <label class="panel-home">
+                                </label>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row-fluid user-row">
+                            <table class="table" id="farmaciasTable">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Direccion</th>
+                                        <th>Telefono</th>
+                                        <th>Distancia</th>
+                                        <th>Puntuacion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="google-maps">
+        <div id="map"></div>
+    </div>
+    <script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: -34.888637,
+                lng: -56.159218
+            },
+            zoom: 13
+        });
+        var geocoder = new google.maps.Geocoder();
+        var farmaciasDistancias = new Array();
+        // var infoWindow = new google.maps.InfoWindow({map: map});
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                //Marcador de mi posicion
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: pos,
+                    animation: google.maps.Animation.DROP,
+                    //    title: 'Usted se encuentra aquí.'
+                });
+                map.setZoom(14);
+                //  infoWindow.setPosition(pos);
+                //  infoWindow.setContent('Usted se encuentra aquí.');
+                map.setCenter(pos);
+
+                for (i = 0; i < farmacias.length; i++) {
+                    var posO = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    var posD = new google.maps.LatLng(farmacias[i].latitud, farmacias[i].longitud);
+                    //Calculo la distancia entre mi posicion y la farmacia y la guardo en el array para luego ordenar
+                    //los medicamentos
+                    var distanciaFarmacia = google.maps.geometry.spherical.computeDistanceBetween(posO, posD);
+                    distanciaFarmacia = distanciaFarmacia / 1000;
+                    distanciaFarmacia = Math.round(distanciaFarmacia * 10) / 10;
+                    farmaciasDistancias.push({
+                        farmacia: farmacias[i],
+                        distancia: distanciaFarmacia
+                    });
+                    // alert(  addressPharmacys[i][5]);
+                }
+
+                // ORDENAR ARRAY DE DISTANCIAS
+                farmaciasDistancias = farmaciasDistancias.sort(function(a, b) {
+                    return (a.distancia > b.distancia) ? 1 : ((b.distancia > a.distancia) ? -1 : 0);
+                });
+
+                // MOSTRAR DATOS
+                for (var i = 0; i < farmaciasDistancias.length; i++) {
+                    var field = farmaciasDistancias[i];
+                    $("#farmaciasTable tbody").append("<tr><td>" + field.farmacia.nombre + "</td><td>" + field.farmacia.direccion + "</td><td>" + field.farmacia.telefono + "</td><td>" + field.distancia +
+                        "Km</td><td>"+field.farmacia.valoracion+"/5</td><td><input onclick='agregarAlCarrito(\"" + field.farmacia.nombre + "\"," + field.farmacia.farmacia_id + ", \"" + precio + "\")' class='btn btn-xs btn-success btn-block' value='Comprar' readonly></td></tr>");
+                }
+                //Circulo rojo de radio.
+                /**  var cityCircle = new google.maps.Circle({
+                 strokeColor: '#FF0000',
+                 strokeOpacity: 0.8,
+                 strokeWeight: 2,
+                 fillColor: '#FF0000',
+                 fillOpacity: 0.35,
+                 map: map,
+                 center: map.getCenter(),
+                 radius: 2000
+                 });**/
+            }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+
+    //Funcion que pasa de direccion textual a coordenadas, estas coordenadas
+    // me las guardo en el array para calcular distancias para ordenar farmacias con medicamentos por distancia.
+    /**  function geocodePharmacyAddress(geocoder, resultsMap) {
+  
+          var image = {
+              url: 'img/pharmacy.ico',
+              size: new google.maps.Size(30, 32),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(0, 32)
+          };
+          var shape = {
+              coords: [1, 1, 1, 20, 18, 20, 18, 1],
+              type: 'poly'
+          };
+          var address;
+          var titlePharmacy;
+          for (i = 0; i < farmacias.length; i++) {
+              address = farmacias[i].direccion + ",Montevideo,Uruguay";
+              titlePharmacy = farmacias[i].nombre + " Telefono: " + farmacias[i].telefono;
+              geocoder.geocode({
+                  'address': address
+              }, function(results, status) {
+                  if (status === google.maps.GeocoderStatus.OK) {
+                      //  resultsMap.setCenter(results[0].geometry.location);
+                      var marker = new google.maps.Marker({
+                          map: resultsMap,
+                          icon: image,
+                          title: titlePharmacy,
+                          shape: shape,
+                          position: results[0].geometry.location
+                      });
+                      //farmacias[i].latitude = marker.lat;
+                      //farmacias[i].longitude = marker.lng;
+
+                  } else {
+                      alert('Geocode was not successful for the following reason: ' + status);
+                  }
+              });
+
+
+          }
+
+
+      }**/
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+    }
+    </script>
+    <script type="text/javascript">
+    function agregarAlCarrito(farmacia, farmaciaId, precio) {
+        var carrito = Cookies.getJSON('carrito');
+        if (typeof carrito == 'undefined') {
+            carrito = new Array();
+        }
+        var item = {
+            medicamento: medicamento,
+            medicamentoId: medicamentoId,
+            farmacia: farmacia,
+            farmaciaId: farmaciaId,
+            precio: precio
+        };
+        carrito.push(item);
+        Cookies.set('carrito', carrito);
+
+        window.location = "carrito.html";
+    }
+    </script>
+    <script type="text/javascript" src="
+https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+    (function() {
+        initMap();
+               var username = document.getElementById("username");
+        username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last') +' <span class="caret">';
+
+        carrito = Cookies.getJSON('carrito');
+        if (typeof carrito != 'undefined') {
+            var carritoname = document.getElementById('carritoname');
+            carritoname.innerHTML = carritoname.innerHTML + " " + carrito.length;
+        }
+    })();
+    </script>
+</body>
+
+</html>

@@ -7,14 +7,10 @@ body {
   font-size: 14px;
   height: 100%; 
   
-margin-top: 30px;
-	margin-bottom: 50px;
+
 	background: none;
 }
 
-body {
-	
-}
 
 .full {
      background: url( '../img/Background.jpg' )  no-repeat center center fixed; 
@@ -54,6 +50,8 @@ body {
     margin: auto;
     }
     .panel {
+        margin-top: 80px;
+
     margin-bottom: 20px;
     background-color: rgba(255, 255, 255, 0.75);
     border: 1px solid transparent;
@@ -66,3 +64,74 @@ body {
         overflow-x: auto;
 overflow-y: auto;
     }
+    
+
+#map{
+    width:25%;
+    height:calc(100% - 0);
+
+    position:absolute;
+    right:16px;
+    top:50px;
+    bottom:0;
+    overflow:hidden;
+}
+
+#main, #main>.row {
+	height:100%;
+}
+
+#main>.row {
+    overflow-y:scroll;
+}
+
+#left {
+	height:100%;
+        margin-left:4%;
+}
+
+#leftShop {
+	height:100%;
+        margin-left:25%;
+}
+
+#centerCheckout{
+    height:100%;
+    margin-top: 100px;
+        margin-left: 35%;
+        display: inline-block,center;
+
+    
+}
+
+.ec-stars-wrapper {
+    /* Espacio entre los inline-block (los hijos, los `a`) 
+       http://ksesocss.blogspot.com/2012/03/display-inline-block-y-sus-empeno-en.html */
+    font-size: 0;
+    /* Podríamos quitarlo, 
+        pero de esta manera (siempre que no le demos padding), 
+        sólo aplicará la regla .ec-stars-wrapper:hover a cuando
+        también se esté haciendo hover a alguna estrella */
+    display: inline-block, center;
+
+
+}
+.ec-stars-wrapper a {
+    text-decoration: none;
+    display: inline-block;
+    /* Volver a dar tamaño al texto */
+    font-size: 32px;
+    font-size: 2rem;
+    
+    color: #888;
+}
+
+.ec-stars-wrapper:hover a {
+    color: rgb(39, 130, 228);
+}
+/*
+ * El selector de hijo, es necesario para aumentar la especifidad
+ */
+.ec-stars-wrapper > a:hover ~ a {
+    color: #888;
+}

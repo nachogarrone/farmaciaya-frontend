@@ -7,7 +7,7 @@ and open the template in the editor.
 <html class="full">
 
 <head>
-    <title>TODO supply a title</title>
+    <title>FarmaciaYa</title>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,22 +15,24 @@ and open the template in the editor.
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/js.cookie.js"></script>
-    <script type="text/javascript">
-    (function() {
-        var token = Cookies.get('token');
-        if (typeof token == 'undefined') {
-            window.location = "login.html";
-        }
-    })();
-    </script>
+    <script src="js/utilities.js"></script>
+    <script src="js/security.js"></script>
     <script>
     function searchMedicamentos() {
         $("#medicamentosTable tbody").empty();
-        $.getJSON("http://localhost:8080/medicamento/search/" + $('#search').val() + "?auth_token=" + Cookies.get('token'), function(result) {
+        $.getJSON("http://localhost:8080/farmaya/medicamento/search/" + $('#search').val() + "?auth_token=" + Cookies.get('token'), function(result) {
             $.each(result.data, function(i, field) {
-                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id="+field.id_medicamento+"'>" +field.nombre+ "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
+                $("#medicamentosTable tbody").append("<tr><td><a href='farmacias.html?id=" + field.medicamento_id + "'>" + field.nombre + "</a></td><td>" + field.presentacion + "</td><td>$U " + field.precio + "</td></tr>");
             });
         });
+    }
+    </script>
+    <script type="text/javascript">
+    function cerrarSesion() {
+        Cookies.remove('token');
+        Cookies.remove('name');
+        Cookies.remove('last');
+        $(location).attr('href', 'login.html');
     }
     </script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -50,9 +52,20 @@ and open the template in the editor.
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="login.html" /><i class="fa fa-user"></i> Iniciar Session</a>
+                    <li><a href="index.html" /> <i class="fa fa-search"></i> Buscar medicamento</a>
                     </li>
-                    <li><a href="register.html" /><i class="fa fa-user-plus"></i> Registrarme</a>
+                    <li class="dropdown">
+                      
+                      <a  id="username"  href="#" class="dropdown-toggle"data-toggle="dropdown"> <i class="fa fa-user"></i></span></a>
+                         <ul class="dropdown-menu">
+                             <li><a href="compras.html"/> <i class="fa fa-list"></i> Compras</a>
+                             </li>
+                             <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
+                              </li>
+                         </ul>
+                    </li>
+                    <li><a id="carritoname" href="carrito.html" /> <i class="fa fa-cart-plus"></i> Carrito</a>
+                    </li>
                     </li>
                 </ul>
             </div>
@@ -61,7 +74,7 @@ and open the template in the editor.
     <div class="container">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-body">
+                <div class="panel-heading">
                     <h1 align="center">  Buscar medicamento </h1>
                     <form accept-charset="UTF-8" role="form" class="form-signin">
                         <fieldset>
@@ -72,7 +85,7 @@ and open the template in the editor.
                         </fieldset>
                     </form>
                 </div>
-                <div class="panel-heading">
+                <div class="panel-body">
                     <div class="row-fluid user-row">
                         <table class="table" id="medicamentosTable">
                             <thead>
@@ -90,6 +103,18 @@ and open the template in the editor.
             </div>
         </div>
     </div>
+    <script>
+    (function() {
+        var username = document.getElementById("username");
+        username.innerHTML = username.innerHTML + " " + Cookies.get('name') + " " + Cookies.get('last') +' <span class="caret">';
+
+        carrito = Cookies.getJSON('carrito');
+        if (typeof carrito != 'undefined') {
+            var carritoname = document.getElementById('carritoname');
+            carritoname.innerHTML = carritoname.innerHTML + " " + carrito.length;
+        }
+    })();
+    </script>
 </body>
 
 </html>

@@ -29,7 +29,7 @@ and open the template in the editor.
         $.ajax({
 
             type: 'POST',
-            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '1',
+            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '1?auth_token='+Cookies.get('token'),
             success: function() {
                 $(location).attr('href', 'index.html');
             },
@@ -44,7 +44,7 @@ and open the template in the editor.
         $.ajax({
 
             type: 'POST',
-            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '2',
+            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '2?auth_token='+Cookies.get('token'),
             success: function() {
                 $(location).attr('href', 'index.html');
             },
@@ -59,7 +59,7 @@ and open the template in the editor.
         $.ajax({
 
             type: 'POST',
-            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '3',
+            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '3?auth_token='+Cookies.get('token'),
             success: function() {
                 $(location).attr('href', 'index.html');
             },
@@ -74,7 +74,7 @@ and open the template in the editor.
         $.ajax({
 
             type: 'POST',
-            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '4',
+            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '4?auth_token='+Cookies.get('token'),
             success: function() {
                 $(location).attr('href', 'index.html');
             },
@@ -89,7 +89,7 @@ and open the template in the editor.
         $.ajax({
 
             type: 'POST',
-            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '5',
+            url: 'http://localhost:8080/farmaya/compra/valuate/' + id + '/' + '5?auth_token='+Cookies.get('token'),
             success: function() {
                 $(location).attr('href', 'index.html');
             },

@@ -54,7 +54,14 @@ and open the template in the editor.
                         alert(result.message);
                     } else {
                         Cookies.set('comprareciente', result.data);
+                        //vaciarCarrito();
+                        Cookies.remove('carrito');
+                       $("#carritoTable tbody").empty();
+
+                        var carritoname = document.getElementById('carritoname');
+                        carritoname.innerHTML = '<i class="fa fa-cart-plus"></i> Carrito';
                         $(location).attr('href', 'compro.html');
+
                     }
                 },
                 dataType: 'Json',

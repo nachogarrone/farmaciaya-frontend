@@ -18,7 +18,12 @@
             type: 'POST',
             success: function(msg, status, jqXHR) {
                 if(msg.status=='ERROR'){
-                    alert('Contrasena incorrecta!');
+                    //alert('Contrasena incorrecta!');
+                     $('#mensaje').empty(); 
+                    $('#mensaje').append('Contrasena incorrecta!');
+                              
+                    $('#mensaje').show();
+
                 }else{
                       Cookies.set('token', msg.data.token);
                     Cookies.set('name', msg.data.firstname);
@@ -28,7 +33,11 @@
               
             },
             error: function(msg, status, jqXHR) {
-                alert('Usuario incorrecto!');
+                $('#mensaje').empty();
+                $('#mensaje').append('Usuario incorrecto!');
+                
+                $('#mensaje').show();
+                //alert('Usuario incorrecto!');
             }
         });
     }
@@ -67,6 +76,7 @@
                             <!--  <img src=" //link" class="img-responsive" alt="Conxole Admin"/>-->
                         </div>
                     </div>
+                   
                     <div class="panel-body">
                         <form accept-charset="UTF-8" role="form" class="form-signin">
                             <fieldset>
@@ -75,9 +85,12 @@
                                 </label>
                                 <input class="form-control" placeholder="Email" id="username" type="text">
                                 <input class="form-control" placeholder="Password" id="password" type="password">
+                                 <div id="mensaje" style="display: none" class="alert alert-danger">
+                                 </div>
                                 <br>
                                 <input onclick="sendData();" class="btn btn-lg btn-success btn-block" id="login" value="Iniciar Sesion" readonly />
                             </fieldset>
+
                         </form>
                     </div>
                 </div>

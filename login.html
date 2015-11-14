@@ -17,13 +17,18 @@
             url: 'http://localhost:8080/farmaya/user/login?username=' + $('#username').val() + '&password=' + $('#password').val(),
             type: 'POST',
             success: function(msg, status, jqXHR) {
-                Cookies.set('token', msg.data.token);
-                Cookies.set('name', msg.data.firstname);
-                Cookies.set('last', msg.data.lastname);
-                $(location).attr('href', 'index.html');
+                if(msg.status=='ERROR'){
+                    alert('Contrasena incorrecta!');
+                }else{
+                      Cookies.set('token', msg.data.token);
+                    Cookies.set('name', msg.data.firstname);
+                    Cookies.set('last', msg.data.lastname);
+                    $(location).attr('href', 'index.html');
+                }
+              
             },
             error: function(msg, status, jqXHR) {
-                alert('error!: ' + msg.message);
+                alert('Usuario incorrecto!');
             }
         });
     }

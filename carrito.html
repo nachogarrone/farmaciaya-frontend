@@ -86,7 +86,7 @@ and open the template in the editor.
                     if (i == 0) {
                         data = '{"compras":[{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"},';
                     }
-                    if (i != carrito.length) {
+                    if (i != carrito.length-1) {
                         data += '{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"},';
                     } else {
                         data += '{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"}]}';

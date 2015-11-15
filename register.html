@@ -4,16 +4,21 @@
 <head>
     <title>Register</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+ 
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+
      <script>
      $(function() {
          $( "#datepicker" ).datepicker();
@@ -21,6 +26,7 @@
 
 //new Date(newDate).getTime() 
     function sendData() {
+        //alert($('#form1').valid());
 
         name = form1.elements["name"].value;
         lastName = form1.elements["lastName"].value;
@@ -42,7 +48,16 @@
                  data: data,
                  success: function(result){
                     if(result.status=='ERROR'){
-                        alert(result.message);
+                        if(result.message=="UsernameTaken"){
+                            $('#mensaje').empty();
+                            $('#mensaje').append('Error: email ya registrado.');    
+                            $('#mensaje').show();
+                        }else{
+                            $('#mensaje').empty();
+                            $('#mensaje').append('Error alregistrar, intente nuevamente.');    
+                            $('#mensaje').show();    
+                        }
+                        
                     }else{
                     $(location).attr('href', 'login.html');
                 }
@@ -52,6 +67,25 @@
         });
 
 }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+        $('#form1').validate({ // initialize the plugin
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                name: {
+                    required: true,
+                    minlength: 8
+                }
+            }
+        });
+
+    });
     </script>
 </head>
 
@@ -99,9 +133,13 @@
                             <label class="panel-register">
                                 <!--<div class="register_result"></div>-->
                             </label>
+                             <input class="form-control" placeholder="Email" id="email" type="text">
+                             <div id="mensaje" style="display: none" class="alert alert-danger">
+                                 </div>
+                              <br>   
                             <input class="form-control" placeholder="Nombre" id="name" type="text">
                             <input class="form-control" placeholder="Apellido" id="lastName" type="text">
-                            <input class="form-control" placeholder="Email" id="email" type="text">
+                           
                             <input class="form-control" placeholder="Direccion" id="address" type="text">
                             <div class="form-group">
                                 <select class="form-control" id="sel1">
@@ -171,8 +209,8 @@
                                     <option>Villa Muñoz, Retiro, Goes</option>
                                 </select>
                             </div>
-                            
-                            <input class="form-control" placeholder="Fecha de nacimiento" id="datepicker" type="text">
+                             <input class="form-control" placeholder="Telefono" id="phone" type="text">
+                            <input class="form-control" placeholder="Fecha de nacimiento" id="datepicker" onkeydown="return false" type="text">
                             <input class="form-control" placeholder="Password" id="password" type="password">
                             <br>
                             <input class="btn btn-lg btn-success btn-block" id="login" value="Registrar" onclick="sendData()">

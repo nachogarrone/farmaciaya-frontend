@@ -25,6 +25,7 @@
                     $('#mensaje').show();
 
                 }else{
+                    vaciarCarrito();
                       Cookies.set('token', msg.data.token);
                     Cookies.set('name', msg.data.firstname);
                     Cookies.set('last', msg.data.lastname);
@@ -40,6 +41,12 @@
                 //alert('Usuario incorrecto!');
             }
         });
+    }
+    </script>
+
+    <script type="text/javascript">
+    function vaciarCarrito() {
+        Cookies.remove('carrito');
     }
     </script>
 </head>

@@ -84,9 +84,8 @@ and open the template in the editor.
                 for (var i = 0; i < carrito.length; i++) {
                     var field = carrito[i];
                     if (i == 0) {
-                        data = '{"compras":[{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"},';
-                    }
-                    if (i != carrito.length-1) {
+                        data = '{"auth_token":"' + Cookies.get('token') +'","compras":[{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"},';
+                    }else if (i != carrito.length-1) {
                         data += '{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"},';
                     } else {
                         data += '{"farmaciaId":' + field.farmaciaId + ',"medicamentoId":"' + field.medicamentoId + '"}]}';

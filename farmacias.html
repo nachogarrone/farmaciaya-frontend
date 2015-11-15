@@ -167,7 +167,7 @@ and open the template in the editor.
                 for (var i = 0; i < farmaciasDistancias.length; i++) {
                     var field = farmaciasDistancias[i];
                     $("#farmaciasTable tbody").append("<tr><td>" + field.farmacia.nombre + "</td><td>" + field.farmacia.direccion + "</td><td>" + field.farmacia.telefono + "</td><td>" + field.distancia +
-                        "Km</td><td>"+parseFloat(field.farmacia.valoracion/field.farmacia.valoraciones).toFixed(2)+"/5</td><td><input onclick='agregarAlCarrito(\"" + field.farmacia.nombre + "\"," + field.farmacia.farmacia_id + ", \"" + precio + "\")' class='btn btn-xs btn-success btn-block' value='Comprar' readonly></td></tr>");
+                        "Km</td><td>"+((field.farmacia.valoraciones!=0)?parseFloat(field.farmacia.valoracion/field.farmacia.valoraciones).toFixed(2):"-")+"/5</td><td><input onclick='agregarAlCarrito(\"" + field.farmacia.nombre + "\"," + field.farmacia.farmacia_id + ", \"" + precio + "\")' class='btn btn-xs btn-success btn-block' value='Comprar' readonly></td></tr>");
                 }
                 //Circulo rojo de radio.
                 /**  var cityCircle = new google.maps.Circle({

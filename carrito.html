@@ -115,6 +115,10 @@ and open the template in the editor.
                 dataType: 'Json',
                 contentType: 'application/json'
             });
+        }else{
+            $('#mensaje').empty(); 
+            $('#mensaje').append('El carrito esta vacio!');    
+            $('#mensaje').show();
         }
     }
     </script>
@@ -133,6 +137,8 @@ and open the template in the editor.
                                 </label>
                             </fieldset>
                         </form>-->
+                         <div id="mensaje" style="display: none" class="alert alert-danger">
+                                 </div>
                     </div>
                     <div class="panel-body">
                         <div class="row-fluid user-row">

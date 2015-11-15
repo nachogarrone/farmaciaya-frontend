@@ -19,70 +19,139 @@
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 
+<style>#form1 label.error{color:red;font-style:italic}
+</style>
+
      <script>
      $(function() {
-         $( "#datepicker" ).datepicker();
+         $( "#datepicker" ).datepicker({dateFormat: 'dd/mm/yy'});
   });
 
 //new Date(newDate).getTime() 
     function sendData() {
         //alert($('#form1').valid());
+        if($('#form1').valid()){
+            name = form1.elements["name"].value;
+            lastName = form1.elements["lastName"].value;
+            email = form1.elements["email"].value;
+            address = form1.elements["address"].value;
+            neighborhood = form1.elements["sel1"].value;
+            birthdate = form1.elements["datepicker"].value;
+            password = form1.elements["password"].value;
+            fecha= new Date(birthdate).getTime();
 
-        name = form1.elements["name"].value;
-        lastName = form1.elements["lastName"].value;
-        email = form1.elements["email"].value;
-        address = form1.elements["address"].value;
-        neighborhood = form1.elements["sel1"].value;
-        birthdate = form1.elements["datepicker"].value;
-        password = form1.elements["password"].value;
-        fecha= new Date(birthdate).getTime();
+           
+            
+          var data= '{"username":"'+email+'","password":"'+password+'","firstname":"'+name+'","lastname":"'+lastName+'","email":"'+email+'","address":"'+address+'","neighborhood":"'+neighborhood+'","birthdate":'+fecha+'}';  //objecto Json con datoscargados
 
-       
-        
-      var data= '{"username":"'+email+'","password":"'+password+'","firstname":"'+name+'","lastname":"'+lastName+'","email":"'+email+'","address":"'+address+'","neighborhood":"'+neighborhood+'","birthdate":'+fecha+'}';  //objecto Json con datoscargados
-
-      //alert(JSON.stringify(data));
-        $.ajax({
-                 type: 'POST',
-                 url: 'http://localhost:8080/farmaya/user/register',
-                 data: data,
-                 success: function(result){
-                    if(result.status=='ERROR'){
-                        if(result.message=="UsernameTaken"){
-                            $('#mensaje').empty();
-                            $('#mensaje').append('Error: email ya registrado.');    
-                            $('#mensaje').show();
+          //alert(JSON.stringify(data));
+            $.ajax({
+                     type: 'POST',
+                     url: 'http://localhost:8080/farmaya/user/register',
+                     data: data,
+                     success: function(result){
+                        if(result.status=='ERROR'){
+                            if(result.message=="UsernameTaken"){
+                                $('#mensaje').empty();
+                                $('#mensaje').append('Error: email ya registrado.');    
+                                $('#mensaje').show();
+                            }else{
+                                $('#mensaje').empty();
+                                $('#mensaje').append('Error alregistrar, intente nuevamente.');    
+                                $('#mensaje').show();    
+                            }
+                            
                         }else{
-                            $('#mensaje').empty();
-                            $('#mensaje').append('Error alregistrar, intente nuevamente.');    
-                            $('#mensaje').show();    
-                        }
-                        
-                    }else{
-                    $(location).attr('href', 'login.html');
-                }
-                 },
-                 dataType: 'Json',
-                 contentType : 'application/json'
-        });
+                        $(location).attr('href', 'login.html');
+                    }
+                     },
+                     dataType: 'Json',
+                     contentType : 'application/json'
+            });
+    }
 
 }
     </script>
 
     <script>
         $(document).ready(function () {
+        
 
-        $('#form1').validate({ // initialize the plugin
+        $("#form1").validate({ // initialize the plugin
             rules: {
                 email: {
                     required: true,
                     email: true
                 },
                 name: {
+                    required: true
+                },
+                lastname: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+                password: {
                     required: true,
                     minlength: 8
+                },
+                password2: {
+                    required: true,
+                    minlength: 8,
+                    equalTo: "#password"
+                },
+                datepicker: {
+                    date: true,
+                    required: true
+                },
+                sel1: {
+                    required: true
+                },
+                phone: {
+                    required: true
                 }
+              
+
+            },
+            messages: {
+
+                email: {
+                    required: "Se rquiere ingresar email.",
+                    email: "Se requiere un formato de email."
+                },
+                name: {
+                    required: "Se requiere ingresar un nombre."
+                },
+                lastname: {
+                    required: "Se requiere ingresar un apellido."
+                },
+                address: {
+                    required: "Se requiere ingresar su direccion de envio."
+                },
+                password: {
+                    required: "Se debe ingresar una contrasena.",
+                    minlength: "La contrasena debe contener al menos 8 caracteres."
+                },
+                password2: {
+                    required: "Se debe reingresar la contrasena.",
+                    minlength: "La contrasena debe contener al menos 8 caracteres.",
+                    equalTo: "La contrasena reingresada no coincide."
+                },
+                datepicker: {
+                    date: "Debe ingresar una fecha.",
+                    required: "Debe seleccionar la fecha de cumpleanos."
+                },
+                sel1: {
+                    required: "Seleccione su Barrio."
+                },
+                phone: {
+                    required: "Se requiere ingresar un telefono."
+                },
+            
+           
             }
+
         });
 
     });
@@ -133,18 +202,17 @@
                             <label class="panel-register">
                                 <!--<div class="register_result"></div>-->
                             </label>
-                             <input class="form-control" placeholder="Email" id="email" type="text">
+                             <input class="form-control" placeholder="Email" id="email" name="email"  type="text">
                              <div id="mensaje" style="display: none" class="alert alert-danger">
                                  </div>
                               <br>   
-                            <input class="form-control" placeholder="Nombre" id="name" type="text">
-                            <input class="form-control" placeholder="Apellido" id="lastName" type="text">
+                            <input class="form-control" placeholder="Nombre" id="name"  name="name" type="text">
+                            <input class="form-control" placeholder="Apellido" id="lastName" name="lastname" type="text">
                            
-                            <input class="form-control" placeholder="Direccion" id="address" type="text">
+                            
                             <div class="form-group">
-                                <select class="form-control" id="sel1">
+                                <select class="form-control" id="sel1" name="sel1">
                                     <option disabled selected value="null"> Barrio </option>
-                                    <option> </option>
                                     <option>Aguada</option>
                                     <option>Atahualpa</option>
                                     <option>Aires Puros</option>
@@ -209,9 +277,13 @@
                                     <option>Villa Muñoz, Retiro, Goes</option>
                                 </select>
                             </div>
-                             <input class="form-control" placeholder="Telefono" id="phone" type="text">
-                            <input class="form-control" placeholder="Fecha de nacimiento" id="datepicker" onkeydown="return false" type="text">
-                            <input class="form-control" placeholder="Password" id="password" type="password">
+                             <input class="form-control" placeholder="Direccion" id="address" name="address"  type="text">
+                             <input class="form-control" placeholder="Telefono" id="phone" name="phone" type="text">
+                            <input class="form-control" placeholder="Fecha de nacimiento" id="datepicker" name="datepicker" onkeydown="return false" type="text">
+                            <br>
+                            <input class="form-control" placeholder="Contrasena" id="password" name="password" type="password">
+                            
+                            <input class="form-control" placeholder="Repetir contrasena" id="password2" name="password2" type="password">
                             <br>
                             <input class="btn btn-lg btn-success btn-block" id="login" value="Registrar" onclick="sendData()">
                         </fieldset>

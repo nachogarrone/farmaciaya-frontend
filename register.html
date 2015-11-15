@@ -39,10 +39,10 @@
             birthdate = form1.elements["datepicker"].value;
             password = form1.elements["password"].value;
             fecha= new Date(birthdate).getTime();
-
+            phone= form1.elements["phone"].value;
            
             
-          var data= '{"username":"'+email+'","password":"'+password+'","firstname":"'+name+'","lastname":"'+lastName+'","email":"'+email+'","address":"'+address+'","neighborhood":"'+neighborhood+'","birthdate":'+fecha+'}';  //objecto Json con datoscargados
+          var data= '{"username":"'+email+'","password":"'+password+'","firstname":"'+name+'","lastname":"'+lastName+'","email":"'+email+'","address":"'+address+'","phone":"'+phone+'","neighborhood":"'+neighborhood+'","birthdate":'+fecha+'}';  //objecto Json con datoscargados
 
           //alert(JSON.stringify(data));
             $.ajax({

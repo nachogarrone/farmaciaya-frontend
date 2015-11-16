@@ -79,7 +79,7 @@ and open the template in the editor.
                                 <tbody>
                                 </tbody>
                             </table>
-                            <a class="btn btn-default" href="index.html">Calificar</a>
+                           
                         </div>
                     </div>
                 </div>
@@ -105,12 +105,18 @@ and open the template in the editor.
         $("#carritoTable tbody").empty();
         $.getJSON("http://localhost:8080/farmaya/compra/get/" + "?auth_token=" + Cookies.get('token'), function(result) {
             $.each(result.data, function(i, field) {
-                $("#carritoTable tbody").append("<tr><td>" + field.farmacia.nombre + "</a></td><td>" + field.date + "</td><td>$U " + field.total + "</td><td>" + field.valoracion + "</td></tr>");
+                $("#carritoTable tbody").append("<tr><td>" + field.farmacia.nombre + "</a></td><td>" + field.date + "</td><td>$U " + field.total + "</td><td>" + ((field.valoracion!=undefined)?field.valoracion:'<a href="#" onclick="Calificar('+field.compra_id+');return false;">Calificar</a>') + "</td></tr>");
             });
         });
 
 
     })();
+
+    function Calificar(parameter) {
+        Cookies.set('comprareciente', parameter);
+        alert(parameter);
+        window.location.href = "compro.html";
+    } 
     </script>
 </body>
 

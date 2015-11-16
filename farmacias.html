@@ -35,6 +35,14 @@ and open the template in the editor.
             });
         });
     })();
+
+
+    function cerrarSesion() {
+        Cookies.remove('token');
+        Cookies.remove('name');
+        Cookies.remove('last');
+        $(location).attr('href', 'login.html');
+    }
     </script>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -60,6 +68,8 @@ and open the template in the editor.
                       <a  id="username"  href="#" class="dropdown-toggle"data-toggle="dropdown"> <i class="fa fa-user"></i></span></a>
                          <ul class="dropdown-menu">
                              <li><a href="compras.html"/> <i class="fa fa-list"></i> Compras</a>
+                             </li>
+                             <li><a href="update.html"/> <i class="fa fa-list"></i> Actualizar datos</a>
                              </li>
                              <li><a href="javascript:void(0)" onclick="cerrarSesion();" /> <i class="fa fa-user-times"></i> Cerrar Session</a>
                               </li>
